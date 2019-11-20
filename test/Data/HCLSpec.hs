@@ -14,7 +14,7 @@ import           System.Directory
 import           System.FilePath
 import           System.IO.Unsafe
 import           Test.Hspec
-import           Text.Megaparsec        (Parsec, Token (..), runParser)
+import           Text.Megaparsec        (Parsec, Token (..), errorBundlePretty, runParser)
 
 {-# NOINLINE fs' #-}
 fs' :: [FilePath]
@@ -170,5 +170,5 @@ spec = do
             "multiline_bad.hcl" -> testFailure fp inp
             "unterminated_brace.hcl" -> testFailure fp inp
             _ -> case parseHCL fp inp of
-                    Left e -> error (show e)
+                    Left e -> error (errorBundlePretty e)
                     Right _ -> True `shouldBe` True
