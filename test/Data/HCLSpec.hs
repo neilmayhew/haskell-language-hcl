@@ -7,6 +7,7 @@ import           Control.Monad
 import           Control.Monad.IO.Class
 import           Data.HCL
 import           Data.HCL.TestHelper
+import           Data.List              (sort)
 import           Data.Text              (Text)
 import qualified Data.Text              as Text
 import qualified Data.Text.IO           as Text
@@ -20,7 +21,7 @@ import           Text.Megaparsec        (Parsec, Token (..), errorBundlePretty, 
 fs' :: [FilePath]
 fs' = unsafePerformIO $ do
     fs <- liftIO (getDirectoryContents "./test-fixtures")
-    return $ filter ((== ".hcl") . takeExtension) fs
+    return . sort $ filter ((== ".hcl") . takeExtension) fs
 
 spec :: Spec
 spec = do
